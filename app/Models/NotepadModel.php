@@ -10,4 +10,3 @@ class NotepadModel extends Model
     protected $primaryKey = 'id';
     protected $allowedFields = ['content', 'created_at'];
 }
-  

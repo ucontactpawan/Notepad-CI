@@ -100,6 +100,26 @@
       link.download = 'note.txt';
       link.click();
     }
+
+    function editFile() {
+      const action = prompt("Choose an edit option:\n1. Clear Text\n2. Undo Last Change\n3. Reload Last Saved Content ");
+
+      switch(action){
+        case '1':
+          document.querySelector('textarea').value = '';
+          updateWordCount();
+          break;
+        case '2':
+          alert("Undo functionality is not implemented yet.");
+          break;
+        case '3':
+          alert("Reload functionality is not implemented yet.");
+          break;
+        default:
+          alert("Invalid option selected.");
+          break;
+      }
+    }
   </script>
 </head>
 
@@ -107,7 +127,7 @@
   <div class="toolbar">
     <div>
       <button onclick="saveFile()">File</button>
-      <button onclick="alert('Edit options coming soon!')">Edit</button>
+      <button onclick="editFile()">Edit</button>
       <button onclick="alert('View options coming soon!')">View</button>
       <button onclick="alert('Help options coming soon!')">Help</button>
     </div>
