@@ -18,8 +18,8 @@
 
     .toolbar {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      justify-content: left;
+      align-items: left;
       background-color: #f4f4f4;
       padding: 10px 20px;
       border-bottom: 1px solid #ddd;
@@ -69,6 +69,61 @@
     th {
       background-color: #f4f4f4;
     } */
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-toggle {
+      background-color: #f4f4f4;
+      border: 1px solid #ddd;
+      padding: 5px 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .arrow {
+      margin-left: 5px;
+      font-size: 12px;
+      color: #555;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      width: 150px;
+    }
+
+    .dropdown-menu button {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 5px 10px;
+      border: none;
+      background: none;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .dropdown-menu button:hover {
+      background-color: #f4f4f4;
+    }
+
+    .icon {
+      margin-right: 8px;
+      font-size: 16px;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
   </style>
   <script>
     function changeFontFamily(font) {
@@ -101,35 +156,77 @@
       link.click();
     }
 
-    function editFile() {
-      const action = prompt("Choose an edit option:\n1. Clear Text\n2. Undo Last Change\n3. Reload Last Saved Content ");
+    function openNewDocument(){
+      console.log("Opening new document");
+      const confirmNew = confirm("Are you sure you want to open a new document");
+      if(confirmNew){
+        document.querySelector('textarea').value = '';
+        updateWordCount();
+      }
+    }
 
-      switch(action){
-        case '1':
-          document.querySelector('textarea').value = '';
-          updateWordCount();
+    function performEdit(action) {
+      const textarea = document.querySelector('textarea');
+      textarea.focus();
+
+      switch (action) {
+        case 'undo':
+          document.execCommand('undo');
           break;
-        case '2':
-          alert("Undo functionality is not implemented yet.");
+        case 'redo':
+          document.execCommand('redo');
           break;
-        case '3':
-          alert("Reload functionality is not implemented yet.");
+        case 'cut':
+          document.execCommand('cut');
+          break;
+        case 'copy':
+          document.execCommand('copy');
+          break;
+        case 'paste':
+          document.execCommand('paste');
           break;
         default:
-          alert("Invalid option selected.");
-          break;
+          alert('invalid action');
       }
+
     }
   </script>
 </head>
 
 <body>
   <div class="toolbar">
-    <div>
-      <button onclick="saveFile()">File</button>
-      <button onclick="editFile()">Edit</button>
-      <button onclick="alert('View options coming soon!')">View</button>
-      <button onclick="alert('Help options coming soon!')">Help</button>
+
+    <div class="dropdown">
+      <button class="dropdown-toggle">File
+        <span class="arrow">▼</span>
+      </button>
+      <div class="dropdown-menu">
+        <button onclick="saveFile()">Save</button>
+        <button onclick="openNewDocument()">Open New Document</button>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropdown-toggle" onclick="toggleDropdown()">
+        Edit<span class="arrow">▼</span>
+      </button>
+      <div class="dropdown-menu" id="editDropdown">
+        <button onclick="performEdit('undo')">
+          <span class="icon">↺</span> Undo
+        </button>
+        <button onclick="performEdit('redo')">
+          <span class="icon">↻</span> Redo
+        </button>
+        <button onclick="performEdit('cut')">
+          <span class="icon">✂</span>Cut
+        </button>
+        <button onclick="performEdit('copy')">
+          <span class="icon">📋</span>Copy
+        </button>
+        <button onclick="performEdit('paste')">
+          <span class="icon">📥</span>Paste
+        </button>
+      </div>
     </div>
     <div>
       <select onchange="changeFontFamily(this.value)">
