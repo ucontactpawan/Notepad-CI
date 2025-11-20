@@ -30,15 +30,15 @@
       margin: 0 5px;
       padding: 5px 10px;
       font-size: 14px;
-    }
+    } 
 
     .notepad-container {
       padding: 20px;
     }
 
     textarea {
-      width: 100%;
-      height: 400px;
+      width: 98%;
+      height: 700px;
       border: 1px solid #ddd;
       border-radius: 5px;
       padding: 10px;
@@ -156,10 +156,10 @@
       link.click();
     }
 
-    function openNewDocument(){
+    function openNewDocument() {
       console.log("Opening new document");
       const confirmNew = confirm("Are you sure you want to open a new document");
-      if(confirmNew){
+      if (confirmNew) {
         document.querySelector('textarea').value = '';
         updateWordCount();
       }
@@ -201,8 +201,12 @@
         <span class="arrow">▼</span>
       </button>
       <div class="dropdown-menu">
-        <button onclick="saveFile()">Save</button>
-        <button onclick="openNewDocument()">Open New Document</button>
+        <button onclick="saveFile()">
+          <span class="icon">💾</span> Save
+        </button>
+        <button onclick="openNewDocument()">
+          <span class="icon">📄</span> New Document
+        </button>
       </div>
     </div>
 
